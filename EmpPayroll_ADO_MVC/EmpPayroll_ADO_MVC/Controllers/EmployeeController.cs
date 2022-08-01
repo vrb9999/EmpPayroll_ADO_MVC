@@ -22,38 +22,6 @@ namespace EmpPayroll_ADO_MVC.Controllers
             empList = empBL.GetAllEmployees().ToList();
             return View(empList);
         }
-        
-        [HttpGet]
-        public IActionResult GetEmployeeData(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            EmployeeModel employee = empBL.GetEmployeeData(id);
-
-            if (employee == null)
-            {
-                return NotFound();
-            }
-            return View(employee);
-        }
-
-        [HttpPost]
-        public IActionResult GetEmployeeData(int id, [Bind] EmployeeModel employee)
-        {
-            if (id != employee.EmpId)
-            {
-                return NotFound();
-            }
-            if (ModelState.IsValid)
-            {
-                empBL.GetEmployeeData(id);
-                return RedirectToAction("Index");
-            }
-            return View(employee);
-        }
-
 
         [HttpGet]
         public IActionResult AddEmployee()
@@ -123,6 +91,22 @@ namespace EmpPayroll_ADO_MVC.Controllers
         {
             empBL.DeleteEmployee(id);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult GetEmployeeData(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            EmployeeModel employee = empBL.GetEmployeeData(id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return View(employee);
         }
     }
 }
